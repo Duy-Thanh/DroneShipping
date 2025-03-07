@@ -1,33 +1,33 @@
-* STM32F103 Power System Model
-*
-* This model describes the power system of the STM32F103 microcontroller.
-* It includes the power supply, the power distribution network, and the
-* power consumption of the microcontroller.
-*
-
+* STM32F103 Power System Model - Enhanced Version
 .SUBCKT STM32F103_POWER VDD VSS VDDA VSSA VDD_INT VOK POR_n VDDA_INT
 
-* Internal voltage nodes
-.NODESET V(VDD_INT)=0
-.NODESET V(POR_n)=0
+* Power monitoring with realistic filtering
+RVDD1 VDD VDD_INT 1
+CVDD1 VDD_INT VSS 4.7u
+RVDD2 VDD_INT VSS 100k
 
-* Power supply monitoring
-EVDD VDD_INT 0 VDD VSS 1
-BVMON VOK 0 V=V(VDD,VSS)>2.0 && V(VDD,VSS)<3.6
+* Voltage monitor with hysteresis
+BVOK VOK VSS V=v(vdd_int)>2.7 ? (v(vdd_int)>2.5 ? 3.3 : v(vok)) : 0
+RVOK VOK VSS 10k
+CVOK VOK VSS 100p
 
-* Power-on Test circuit (POR)
-CPOR POR_n 0 100n
-RPOR POR_n 0 100k
-BPOR POR_n 0 V=V(VOK)>0.5 ? 3.3 : 0
+* Power-on reset with delay
+BPOR POR_n VSS V=v(vok)>3.0 ? (time>20u ? 3.3 : 0) : 0
+RPOR POR_n VSS 10k
+CPOR POR_n VSS 1n
 
-* Current consumption model (simplified)
-IVDD VDD VSS PWL(0 0
-+ 1u 20mA           ; Startup current
-+ 2u 40mA           ; Peak current
-+ 3u 20mA)          ; Running current
+* Analog power with filtering
+RVDDA VDDA VDDA_INT 1
+CVDDA VDDA_INT VSSA 4.7u
+RVDDA2 VDDA_INT VSSA 100k
 
-* Analog power domain
-RVDDA VDDA VDDA_INT 10
-CVDDA VDDA_INT 0 100n
+* Current consumption model with startup
+IVDD VDD VSS PWL(
++ 0    0
++ 0.1u -5m     ; Initial surge
++ 1u   -20m    ; Startup
++ 10u  -15m    ; Normal operation
++ 20u  -10m    ; Settled
++ 100u -10m)   ; Steady state
 
 .ENDS
