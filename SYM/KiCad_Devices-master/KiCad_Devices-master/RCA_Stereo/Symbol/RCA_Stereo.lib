@@ -1,0 +1,38 @@
+EESchema-LIBRARY Version 2.4
+#encoding utf-8
+#
+# RCA_Stereo
+#
+DEF RCA_Stereo J 0 40 Y Y 1 F N
+F0 "J" -225 -150 50 V V C CNN
+F1 "RCA_Stereo" -25 150 50 H V C CNN
+F2 "" -325 -400 100 V I C CNN
+F3 "" -325 -400 100 V I C CNN
+DRAW
+C -150 0 5 0 1 0 N
+C -150 0 25 0 1 0 F
+C -150 0 71 0 1 0 N
+C 50 0 5 0 1 0 N
+C 50 0 25 0 1 0 F
+C 50 0 71 0 1 0 N
+T 0 -50 50 50 0 0 0 L Normal 0 C C
+T 0 150 50 50 0 0 0 R Normal 0 C C
+S 200 -100 -250 100 0 1 0 f
+P 2 0 1 0 -150 -50 -150 -100 N
+P 2 0 1 0 -150 -50 -150 0 N
+P 2 0 1 0 -50 -50 -50 -100 N
+P 2 0 1 0 -50 -50 -50 0 N
+P 2 0 1 0 -50 0 -75 0 N
+P 2 0 1 0 50 -50 50 -100 N
+P 2 0 1 0 50 -50 50 0 N
+P 2 0 1 0 150 -50 150 -100 N
+P 2 0 1 0 150 -50 150 0 N
+P 2 0 1 0 150 0 125 0 N
+X ~ 1 -50 -200 100 U 50 50 1 1 W
+X ~ 2 -150 -200 100 U 50 50 1 1 B
+X ~ 3 150 -200 100 U 50 50 1 1 W
+X ~ 4 50 -200 100 U 50 50 1 1 B
+ENDDRAW
+ENDDEF
+#
+#End Library
