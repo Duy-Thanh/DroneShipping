@@ -13,7 +13,7 @@
 
 * Power supply monitoring
 EVDD VDD_INT 0 VDD VSS 1
-BVMON VOK 0 V=V(VDD,VSS)>2.0 & V(VDD,VSS)<3.6
+BVMON VOK 0 V=V(VDD,VSS)>2.0 && V(VDD,VSS)<3.6
 
 * Power-on Test circuit (POR)
 CPOR POR_n 0 100n
