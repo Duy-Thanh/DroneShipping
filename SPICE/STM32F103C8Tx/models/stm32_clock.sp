@@ -1,0 +1,31 @@
+* STM32F103 Clock System Model - With PLL
+.SUBCKT STM32F103_CLOCK HSE VSS SYSCLK PLL_CLK HCLK PCLK1 PCLK2
+
+* HSE buffer
+R1 HSE HSE_BUF 1k
+C1 HSE_BUF VSS 10p
+
+* PLL with frequency multiplication
+* Simple buffer for now (will add multiplication later)
+R2 HSE_BUF PLL_CLK 1k
+C2 PLL_CLK VSS 10p
+
+* SYSCLK = PLL_CLK
+R3 PLL_CLK SYSCLK 1k
+C3 SYSCLK VSS 10p
+
+* HCLK = SYSCLK
+R4 SYSCLK HCLK 1k
+C4 HCLK VSS 10p
+
+* PCLK1 = HCLK/2 (using toggle flip-flop)
+BPCLK1 PCLK1 VSS V=v(HCLK)>1.65 && v(PCLK1)<1.65 ? 3.3 : 
++ (v(HCLK)<1.65 && v(PCLK1)>1.65 ? 0 : v(PCLK1))
+RPCLK1 PCLK1 VSS 1k
+CPCLK1 PCLK1 VSS 10p
+
+* PCLK2 = HCLK
+R5 HCLK PCLK2 1k
+C5 PCLK2 VSS 10p
+
+.ENDS

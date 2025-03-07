@@ -1,0 +1,12 @@
+* STM32F103 Reset System Model - Simplified
+.SUBCKT STM32F103_RESET NRST POR_N VSS SYS_RST
+
+* NRST input filter
+RRST NRST NRST_FLT 10k
+CRST NRST_FLT VSS 100p
+
+* System reset logic
+BRST SYS_RST VSS V=min(v(NRST_FLT), v(POR_N))
+RRST_OUT SYS_RST VSS 10k
+
+.ENDS 
